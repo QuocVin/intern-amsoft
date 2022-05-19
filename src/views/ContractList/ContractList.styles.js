@@ -41,7 +41,7 @@ export const useStyles = makeStyles((theme) => ({
             maxWidth: '950px',
         },
         '& .MuiDialogContent-root': {
-            height: '145px',
+            // height: '145px',
         },
         '& .MuiDialogActions-root': {
             alignSelf: 'center',

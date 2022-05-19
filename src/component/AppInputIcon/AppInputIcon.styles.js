@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     inputRight: {
-        width: '350px',
+        // width: '100%',
         "& .MuiOutlinedInput-notchedOutline": {
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,

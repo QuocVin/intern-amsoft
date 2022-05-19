@@ -8,56 +8,35 @@ import {
     Checkbox, FormLabel, FormGroup, FormHelperText
 } from '@material-ui/core';
 import { useStyles } from './DeviceStatus.styles';
-import { AppPagination, AppSelect, AppInputIcon, AppSelectRadio, AppSelectCheckbox } from '../../component';
+import { AppPagination, AppSelect, AppInputIcon, AppSelectRadio, AppSelectCheckbox, AppForm } from '../../component';
 import { ROUTES } from '../../comon';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { useForm, Controller } from "react-hook-form";
 
 const options = [
-    { id: 'optionAll', label: 'Tất cả' },
-    { id: 'option1', label: 'option 1' },
-    { id: 'option2', label: 'option 2' },
-    { id: 'option3', label: 'option 3' },
-    { id: 'option4', label: 'option 4' },
-    { id: 'option5', label: 'option 5' },
-    { id: 'option6', label: 'option 6' },
+    { id: 'optionAll', label: { title: 'Tất cả' }, xs: 12, component: { textField: true } },
+    { id: 'option1', label: { title: 'option 1' }, xs: 12, component: { textField: true } },
+    { id: 'option2', label: { title: 'option 2' }, xs: 12, component: { textField: true } },
+    { id: 'option3', label: { title: 'option 3', checkboxLabel: 'checkbox label option 3' }, xs: 12, component: { checkbox: true } },
+    { id: 'option4', label: { title: 'option 4' }, xs: 12, component: { textField: true } },
+    { id: 'option5', label: { title: 'option 5' }, xs: 12, component: { radio: true } },
+    { id: 'option6', label: { title: 'option 6', checkboxLabel: 'checkbox label option 6' }, xs: 12, component: { checkbox: true } },
+    { id: 'option7', label: { title: 'option 7', checkboxLabel: 'checkbox label option 7' }, xs: 12, component: { checkbox: true } },
 ]
-
-const getValueByKey = (arr, key) => {
-    return arr.map((item) => { return item[`${key}`] })
-}
 
 export default function DeviceStatusView() {
     const classes = useStyles();
+    const { watch, control, setValue, getValues } = useForm()
+    const handleRegistration = () => {
+        console.info(getValues())
+    }
+
     // const [sel, setSel] = useState('');
     // const [count, setCount] = useState(4);
 
     // const handleChange = (event) => {
     //     setSel(event.target.value);
     // };
-
-    const arrId = getValueByKey(options, 'id')
-
-    const [selectChecked, setSelectChecked] = React.useState([]);
-    const handleChange = (event) => {
-        console.info(event.target.value)
-        if (event.target.value.includes('optionAll')) {
-            if (selectChecked.length > 0 && selectChecked.includes('optionAll')) {
-                let arr = [...event.target.value]
-                arr.shift()
-                setSelectChecked(arr);
-            } else {
-                setSelectChecked(arrId)
-            }
-        } else if (!event.target.value.includes('optionAll')) {
-            if (selectChecked.length === 0 || (selectChecked.length > 0 && !selectChecked.includes('optionAll'))) {
-                setSelectChecked(event.target.value);
-            } else {
-                setSelectChecked([])
-            }
-        } else {
-            setSelectChecked(event.target.value);
-        }
-    };
 
     return (
         <Box className={classes.rootView}>
@@ -70,7 +49,8 @@ export default function DeviceStatusView() {
                 </Box>
             </Box> */}
             <Box>
-                <AppSelectCheckbox options={options} selectChecked={selectChecked} setSelectChecked={setSelectChecked} handleChange={handleChange} />
+                <AppForm fields={options} control={control} getValues={getValues} setValue={setValue} />
+                <Button onClick={handleRegistration} >submit</Button>
             </Box>
         </Box>
     )

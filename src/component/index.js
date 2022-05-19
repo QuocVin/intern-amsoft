@@ -4,7 +4,8 @@ import AppTable from './AppTable'
 import AppInputIcon from './AppInputIcon'
 import AppSelectRadio from './AppSelectRadio'
 import AppSelectCheckbox from './AppSelectCheckbox'
-import AppTextField from './AppTextField'
+import AppInput from './AppInput'
+import AppForm from './AppForm'
 
 export {
     AppPagination,
@@ -13,5 +14,6 @@ export {
     AppInputIcon,
     AppSelectRadio,
     AppSelectCheckbox,
-    AppTextField,
+    AppInput,
+    AppForm,
 }

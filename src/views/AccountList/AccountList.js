@@ -6,8 +6,9 @@ import {
     Radio, RadioGroup, FormControl, TextField
 } from '@material-ui/core';
 import { useStyles } from './AccountList.styles';
-import { AppPagination, AppSelect, AppTable, AppInputIcon, AppTextField } from '../../component';
+import { AppPagination, AppSelect, AppTable, AppInputIcon, AppInput, AppForm } from '../../component';
 import { ROUTES } from '../../comon';
+import { useForm, Controller } from "react-hook-form";
 
 const obj = [
     { id: '1', label: '1' },
@@ -15,10 +16,22 @@ const obj = [
     { id: '3', label: '3' },
 ]
 
+const options = [
+    { id: 'optionAll', label: { title: 'Tất cả' }, xs: 12, component: { textField: true } },
+    { id: 'option1', label: { title: 'option 1' }, xs: 12, component: { textField: true } },
+    { id: 'option2', label: { title: 'option 2' }, xs: 12, component: { textField: true } },
+    { id: 'option3', label: { title: 'option 3', checkboxLabel: 'checkbox label option 3' }, xs: 12, component: { checkbox: true } },
+    { id: 'option4', label: { title: 'option 4' }, xs: 12, component: { textField: true } },
+    { id: 'option5', label: { title: 'option 5' }, xs: 12, component: { radio: true } },
+    { id: 'option6', label: { title: 'option 6', checkboxLabel: 'checkbox label option 6' }, xs: 12, component: { checkbox: true } },
+    { id: 'option7', label: { title: 'option 7', checkboxLabel: 'checkbox label option 7' }, xs: 12, component: { checkbox: true } },
+]
+
 export default function AccountListView() {
     const classes = useStyles();
     const [sel, setSel] = useState('');
     const [count, setCount] = useState(4);
+    const { watch, control, setValue, getValues } = useForm()
 
     const handleChange = (event) => {
         setSel(event.target.value);
@@ -30,12 +43,7 @@ export default function AccountListView() {
     };
     const handleClose = () => {
         setOpen(false);
-    };
-
-    const [value, setValue] = React.useState('female');
-
-    const handleChange2 = (event) => {
-        setValue(event.target.value);
+        console.info(getValues())
     };
 
     return (
@@ -48,42 +56,19 @@ export default function AccountListView() {
                 </Box>
             </Box>
 
-            <Dialog className={classes.rootDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{ROUTES.ACCOUNT_LIST.NAME}</DialogTitle>
-                <DialogContent >
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <AppTextField label={'row content'} control={{ textField: true }} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <AppTextField label={'row content'} control={{ textField: true }} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <AppTextField label={'row content'} control={{ textField: true }} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <AppTextField control={{ checkbox: true }} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <AppTextField label={'row content'} control={{ textField: true }} />
-                        </Grid>
-                        <Grid item xs={12} className={classes.rowInput}>
-                            <AppTextField label={'row content'} control={{ radio: true }} />
-                        </Grid>
-                        <Grid item xs={12} className={classes.rowInput}>
-                            <AppTextField label={'row content'} control={{ checkbox: true }} />
-                        </Grid>
-                        <Grid item xs={12} className={classes.rowInput}>
-                            <AppTextField label={'row content'} control={{ checkbox: true }} />
-                        </Grid>
-                    </Grid>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary" variant="contained">
-                        Sumit
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <div>
+                <Dialog className={classes.rootDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">{ROUTES.ACCOUNT_LIST.NAME}</DialogTitle>
+                    <DialogContent >
+                        <AppForm fields={options} control={control} getValues={getValues} setValue={setValue} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary" variant="contained">
+                            Sumit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
 
             <Box className={[classes.row, classes.rowPage].join(' ')}>
                 <Box><Typography>row index in table</Typography></Box>

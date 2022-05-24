@@ -1,18 +1,60 @@
-const options = [
-    { id: 'optionAll', label: 'Tất cả', value: false },
-    { id: 'option1', label: 'option 1', value: false },
-    { id: 'option2', label: 'option 2', value: false },
-    { id: 'option3', label: 'option 3', value: false },
-    { id: 'option4', label: 'option 4', value: false },
-    { id: 'option5', label: 'option 5', value: false },
-    { id: 'option6', label: 'option 6', value: false },
-]
-
-const fun = (arr, key) => {
-    return arr.map((item) => { return item[`${key}`] })
+arr = [2, 4, 3, 5, 0, 36, 8]
+function fun1(arr) {
+    arr.map((item, idx) => {
+        if (idx % 2 === 0) {
+            if (item % 2 === 0) {
+                console.info(item, 'la so chan')
+            } else {
+                console.info(item, 'khong la so chan')
+            }
+        }
+    })
 }
-const a = fun(options, 'id')
-console.info(a)
+// fun1(arr)
+
+const str = "Hello"
+function repeatEnd(str, n) {
+    let newStr = ""
+    let tam = str.substr(str.length - n, n)
+    for (let i = 0; i < n; i++) {
+        newStr += tam;
+    }
+    return newStr
+}
+console.info(repeatEnd(str, 2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const options = [
+//     { id: 'optionAll', label: 'Tất cả', value: false },
+//     { id: 'option1', label: 'option 1', value: false },
+//     { id: 'option2', label: 'option 2', value: false },
+//     { id: 'option3', label: 'option 3', value: false },
+//     { id: 'option4', label: 'option 4', value: false },
+//     { id: 'option5', label: 'option 5', value: false },
+//     { id: 'option6', label: 'option 6', value: false },
+// ]
+
+// const fun = (arr, key) => {
+//     return arr.map((item) => { return item[`${key}`] })
+// }
+// const a = fun(options, 'id')
+// console.info(a)
 
 
 // const input = [

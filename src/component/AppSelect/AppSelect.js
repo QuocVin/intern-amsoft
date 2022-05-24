@@ -38,7 +38,7 @@ const BootstrapInput = withStyles((theme) => ({
     },
 }))(InputBase);
 
-export default function AppSelect({ tags = [], handleChange = () => { } }) {
+export default function AppSelect({ value, tags = [], onChange = () => { } }) {
     const classes = useStyles();
 
     return (
@@ -46,8 +46,8 @@ export default function AppSelect({ tags = [], handleChange = () => { } }) {
             <Select
                 labelId="demo-customized-select-label-"
                 id={`outlined-customized-select-xzc`}
-                defaultValue={tags[0].id}
-                onChange={handleChange}
+                value={Number(value)}
+                onChange={onChange}
                 input={<BootstrapInput />}
             >
                 {tags.map((t, idx) => {

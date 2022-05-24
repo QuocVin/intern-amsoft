@@ -6,6 +6,7 @@ import AppSelectRadio from './AppSelectRadio'
 import AppSelectCheckbox from './AppSelectCheckbox'
 import AppInput from './AppInput'
 import AppForm from './AppForm'
+import AppDialog from './AppDialog'
 
 export {
     AppPagination,
@@ -16,4 +17,5 @@ export {
     AppSelectCheckbox,
     AppInput,
     AppForm,
+    AppDialog,
 }

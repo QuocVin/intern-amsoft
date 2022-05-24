@@ -8,6 +8,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    // ------------------------
     row: {
         display: 'flex',
         flexDirection: 'row',
@@ -16,18 +17,19 @@ export const useStyles = makeStyles((theme) => ({
     rowPage: {
         justifyContent: 'space-between'
     },
-    boxPag: {
-        marginLeft: '25px'
-    },
     rowlabel: {
         marginRight: '15px'
     },
+    boxTable: {
+        margin: theme.spacing(3, 0),
+    },
+    boxPag: {
+        marginLeft: '25px'
+    },
+    // -----------------------
     rootSel: {
         width: "120px",
         margin: theme.spacing(0, 2, 0, 2),
-    },
-    boxTable: {
-        margin: theme.spacing(3, 0),
     },
     spacingBottom: {
         marginBottom: theme.spacing(2),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import InfoIcon from '@material-ui/icons/Info';
@@ -8,9 +8,9 @@ import clsx from 'clsx';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.common.black,
-        borderBottom: '3px solid black',
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        // borderBottom: '3px solid black',
         borderRight: '1px solid #ebe6e3',
         fontWeight: 'bold',
         textAlign: 'center'
@@ -31,7 +31,6 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
     table: {
-        // tableLayout: 'fixed',
         width: 'max-content'
     },
     row: {
@@ -47,7 +46,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function AppTable({ columns = [], rows = [], action = {} }) {
+const AppTable = ({ columns = [], exactColumns = [], rows = [], action = {} }) => {
     const classes = useStyles();
     const { info, edit, del } = action
 
@@ -81,28 +80,44 @@ export default function AppTable({ columns = [], rows = [], action = {} }) {
         <TableContainer className={classes.table} component={Paper}>
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="center" style={{ width: 70 }}>STT</StyledTableCell>
-                        {columns.map((col, idx) => (
-                            <StyledTableCell key={`${idx}-${col.id}-table-cell-header`} style={{ width: col.width + 70 }}>{col.label}</StyledTableCell>
-                        ))}
-                        <StyledTableCell align="center">Activity</StyledTableCell>
-                    </TableRow>
+                    {columns.map((row, index) => {
+                        return (
+                            <TableRow key={index}>
+                                {[
+                                    ...(index === 0 ? [{ id: 'stt', label: 'STT', rowSpan: 2 }] : []),
+                                    ...row,
+                                    ...(index === 0 ? [{ id: 'act', label: 'Act', rowSpan: 2 }] : [])
+                                ]?.map?.((col, idx) => {
+                                    let _width = 'max-content'
+                                    if (index !== 0) {
+                                        _width = +col?.width + 70 + 'px'
+                                    }
+                                    return (
+                                        <StyledTableCell key={`${idx}-${col.id}-table-cell-header`}
+                                            style={{ width: _width }}
+                                            rowSpan={col.rowSpan || 1} colSpan={col.colSpan || 1} >
+                                            {col.label}
+                                        </StyledTableCell>
+                                    )
+                                })}
+                            </TableRow>
+                        )
+                    })}
                 </TableHead>
                 <TableBody>
                     {rows.map((row, idx) => (
                         <StyledTableRow key={`${idx}-table-row`}>
-                            <StyledTableCell align="center">{idx + 1}</StyledTableCell>
-                            {columns.map((col) => {
-                                const value = row[col.id];
+                            <StyledTableCell align="center" style={{ width: 70 }}>{idx + 1}</StyledTableCell>
+                            {exactColumns.map((col) => {
+                                const value = row[`${col}`];
                                 return (
-                                    <StyledTableCell key={`${col.id}-table-cell-header`} align={col.align}>
+                                    <StyledTableCell key={`${col}-table-cell-header`} align={typeof value === 'number' ? 'right' : 'center'}>
                                         {col?.format && typeof value === 'number' ? col.format(value) : value}
                                     </StyledTableCell>
                                 );
                             })}
                             {/* <StyledTableCell component="th" scope="row">sd</StyledTableCell> */}
-                            <StyledTableCell align="center"><CellAct info={info} edit={edit} del={del} /></StyledTableCell>
+                            <StyledTableCell align="center" style={{ width: 190 }}><CellAct info={info} edit={edit} del={del} /></StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
@@ -110,3 +125,5 @@ export default function AppTable({ columns = [], rows = [], action = {} }) {
         </TableContainer>
     );
 }
+
+export default AppTable;

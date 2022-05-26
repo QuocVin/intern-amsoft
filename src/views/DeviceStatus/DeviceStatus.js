@@ -28,14 +28,30 @@ const obj = [
 ]
 
 const columns = [
-    { id: 'col1', label: 'column 1', align: 'right', },
-    { id: 'col2', label: 'column 2', align: 'right', },
-    { id: 'col3', label: 'column 3', align: 'right', },
-    { id: 'col4', label: 'column 4', align: 'right', },
-    { id: 'col5', label: 'column 5', align: 'right', },
-    { id: 'col6', label: 'column 6', align: 'right', },
-    { id: 'col7', label: 'column 7', align: 'right', },
+    { id: 'col1', label: 'column 1', align: 'left', width: 100 },
+    { id: 'col2', label: 'column 2', align: 'right', width: 120 },
+    { id: 'col3', label: 'column 3', align: 'right', width: 160 },
+    { id: 'col4', label: 'column 4', align: 'right', width: 100 },
+    { id: 'col5', label: 'column 5', align: 'right', width: 180 },
+    { id: 'col6', label: 'column 6', align: 'right', width: 130 },
+    { id: 'col7', label: 'column 7', align: 'right', width: 100 },
 ]
+
+// const columns = [
+//     [
+//         { id: 'col1', label: 'column 1', align: 'left', width: 100 },
+//         { id: 'col2', label: 'column 2', align: 'right', width: 120 },
+//         { id: 'col3', label: 'column 3', align: 'right', width: 160 },
+//         { id: 'col4', label: 'column 4', align: 'right', width: 100 },
+//         { id: 'col5', label: 'column 5', align: 'right', width: 180 },
+//         { id: 'col6', label: 'column 6', align: 'right', width: 130 },
+//         { id: 'col7', label: 'column 7', align: 'right', width: 100 },
+//     ],
+//     [
+//         { id: 'col8', label: 'column 8', align: 'left', width: 100 },
+//         { id: 'col9', label: 'column 9', align: 'left', width: 100 },
+//     ]
+// ]
 
 function createData(col1, col2, col3, col4, col5, col6, col7) {
     return { col1, col2, col3, col4, col5, col6, col7 };
@@ -79,16 +95,22 @@ export default function DeviceStatusView() {
     return (
         <Box className={classes.rootView}>
             <Box>
-                <AppDialog
+                {/* <AppDialog
                     fields={options}
                     useForm={{ control, setValue, getValues }}
                     table={{ columns: columns, rows: rows, action: { info: true, edit: true }, tableView: true }}
                     dialogAct={{ open: open, handleClose: handleClose, handleSubmit: handleRegistration }}
                     pagePag={{ page: page, tagPages: obj, pageLength: 4, handlePage: handlePage, handlePageSel: handlePageSel }}
                     title={ROUTES.DEVICE_STATUS.NAME}
-                />
-                <Button onClick={handleClickOpen} >submit</Button>
+                /> */}
+
             </Box>
+            <AppTable
+                columns={columns}
+                rows={rows}
+                action={{ info: true, edit: true, del: true }}
+            />
+            <Button onClick={handleClickOpen} >submit</Button>
         </Box>
     )
 }

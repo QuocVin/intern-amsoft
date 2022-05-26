@@ -4,6 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import InfoIcon from '@material-ui/icons/Info';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import clsx from 'clsx';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -12,10 +13,11 @@ const StyledTableCell = withStyles((theme) => ({
         borderBottom: '3px solid black',
         borderRight: '1px solid #ebe6e3',
         fontWeight: 'bold',
+        textAlign: 'center'
     },
     body: {
         fontSize: 14,
-        borderRight: '1px solid #ebe6e3'
+        borderRight: '1px solid #ebe6e3',
     },
 }))(TableCell);
 
@@ -29,12 +31,19 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 700,
+        // tableLayout: 'fixed',
+        width: 'max-content'
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center'
+        justifyContent: 'center'
+    },
+    btn: {
+        "& .MuiButton-root": {
+            padding: '6px',
+            minWidth: 'max-content',
+        }
     },
 });
 
@@ -45,37 +54,37 @@ export default function AppTable({ columns = [], rows = [], action = {} }) {
     const CellAct = ({ info = false, edit = false, del = false }) => {
         const BtnInfo = ({ info }) => {
             if (info) {
-                return <> <InfoIcon color="primary" /> </>
+                return <Button> <InfoIcon color="primary" /> </Button>
             } else return
         }
         const BtnEdit = ({ edit }) => {
             if (edit) {
-                return <> <EditIcon color="primary" /> </>
+                return <Button> <EditIcon color="primary" /> </Button>
             } else return
         }
         const BtnDel = ({ del }) => {
             if (del) {
-                return <> <DeleteIcon color="secondary" /> </>
+                return <Button> <DeleteIcon color="secondary" /> </Button>
             } else return
         }
 
         return (
-            <div className={classes.row}>
-                <Button><BtnInfo info={info} /></Button>
-                <Button><BtnEdit edit={edit} /></Button>
-                <Button><BtnDel del={del} /></Button>
+            <div className={clsx(classes.row, classes.btn)}>
+                <BtnInfo info={info} />
+                <BtnEdit edit={edit} />
+                <BtnDel del={del} />
             </div>
         )
     }
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className={classes.table} component={Paper}>
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell align="center">STT</StyledTableCell>
+                        <StyledTableCell align="center" style={{ width: 70 }}>STT</StyledTableCell>
                         {columns.map((col, idx) => (
-                            <StyledTableCell key={`${idx}-${col.id}-table-cell-header`}>{col.label}</StyledTableCell>
+                            <StyledTableCell key={`${idx}-${col.id}-table-cell-header`} style={{ width: col.width + 70 }}>{col.label}</StyledTableCell>
                         ))}
                         <StyledTableCell align="center">Activity</StyledTableCell>
                     </TableRow>
@@ -87,7 +96,7 @@ export default function AppTable({ columns = [], rows = [], action = {} }) {
                             {columns.map((col) => {
                                 const value = row[col.id];
                                 return (
-                                    <StyledTableCell key={`${col.id}-table-cell-header`} align={col.align} >
+                                    <StyledTableCell key={`${col.id}-table-cell-header`} align={col.align}>
                                         {col?.format && typeof value === 'number' ? col.format(value) : value}
                                     </StyledTableCell>
                                 );

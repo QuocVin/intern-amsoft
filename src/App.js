@@ -8,7 +8,7 @@ export default function App() {
   const [auth, setAuth] = useState(false);
 
   const onSubmit = () => {
-    setAuth(true)
+    setAuth(true);
   }
 
   return (
